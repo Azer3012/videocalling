@@ -16,6 +16,7 @@ const sendTo = (connection, message) => {
   connection.send(message);
 };
 
+
 app.get("/", (req, res) => {
   res.sendFile(__dirname + "/index_new.html");
 });
