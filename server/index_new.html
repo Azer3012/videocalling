@@ -1,0 +1,75 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="message-container">
+        <input type="text" class="login" value="userA">
+        <button>Login</button>
+
+    </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket=io()
+        let username;
+        const btn=document.querySelector('button')
+        const userLogin=()=>{
+            const login=document.querySelector('.login').value;
+            username=login
+            socket.send({
+                type:"login",
+                name:username
+            })
+
+        }
+        btn.addEventListener('click',userLogin)
+        socket.on("connect",(data)=>{
+            console.log(data);
+        })
+
+        const onLogin=(data)=>{
+            
+            if(data.success===false){
+
+                alert('Opps try a dioffrent username')
+
+            }
+            else{
+                username=data.username
+                console.log('login succesfully');
+                console.log('login in as '+ username);
+                console.log(data.userList);
+            }
+        }
+        
+        socket.on("roommessage",(message)=>{
+            let data=message
+            switch(data.type){
+                case "login":
+                    console.log('new user: '+data.username);
+                    break;
+                case "disconnect":
+                    console.log('user disconnected : '+data.username);
+                    break;
+                default:
+                    break;
+            }
+        })
+        socket.on("message",(message)=>{
+            let data=message
+            switch(data.type){
+                case "login":
+                    onLogin(data)
+                    break;
+                default:
+                    break;
+            }
+        })
+    </script>
+</body>
+</html>
