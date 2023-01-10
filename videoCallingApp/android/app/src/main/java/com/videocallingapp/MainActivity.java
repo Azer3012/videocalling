@@ -3,8 +3,11 @@ package com.videocallingapp;
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;
 import com.facebook.react.ReactRootView;
+import android.os.Bundle;
 
 public class MainActivity extends ReactActivity {
+
+
 
   /**
    * Returns the name of the main component registered from JavaScript. This is used to schedule
@@ -14,6 +17,10 @@ public class MainActivity extends ReactActivity {
   protected String getMainComponentName() {
     return "videoCallingApp";
   }
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+  super.onCreate(null);
+}
 
   /**
    * Returns the instance of the {@link ReactActivityDelegate}. There the RootView is created and
